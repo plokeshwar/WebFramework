@@ -1,0 +1,142 @@
+<project name="NPC_Regression" default="dist" basedir=".">
+
+	<description>
+        Project Description
+    </description>
+
+	<!-- set global properties for this build -->
+
+	<property name="projectName" value="NPC_Regression" />
+	<property name="src" location="src" />
+	<property name="build" location="build" />
+	<property name="dist" location="dist" />
+	<property name="webcontent" location="WebContent" />
+	<property name="lib.dir" value="/Users/plokeshwar/Documents/workspace/NPC_Admin_Regression/WebContent/WEB-INF/lib" />
+	<property name="browser" value="/Users/plokeshwar/Documents/workspace/NPC_Admin_Regression/WebContent/browsers" />
+
+	<path id="classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
+	</path>
+
+
+	<target name="init">
+		<!-- Create the time stamp -->
+		<tstamp />
+		<!-- Create the build directory structure used by compile -->
+		<mkdir dir="${build}" />
+	</target>
+
+	<target name="compile" depends="init" description="compile the source ">
+		<!-- Compile the java code from ${src} into ${build} -->
+		<javac includeantruntime="true" srcdir="${src}" destdir="${build}" classpathref="classpath" />
+	</target>
+
+	<target name="dist" depends="compile" description="generate the distribution">
+		<!-- Create the distribution directory -->
+		<mkdir dir="${dist}/lib" />
+		<!-- Put everything in ${build} into the {$projectName}-${DSTAMP}.jar file -->
+		<jar jarfile="${dist}/lib/${projectName}.jar" basedir="${build}" />
+	</target>
+
+	<target name="war" depends="compile" description="generate the distribution war">
+		<!-- Create the war distribution directory -->
+		<mkdir dir="${dist}/war" />
+		<!-- Follow standard WAR structure -->
+		<!--<copydir dest="${dist}/war/build/WEB-INF/" src="${webcontent}/WEB-INF/" includesfile="web.xml"></copydir>-->
+
+		<copydir dest="${dist}/war/build/WEB-INF/classes/" src="${build}" />
+	
+		<copydir dest="${dist}/war/build/browsers" src="${browser}" />
+	
+		<copy includeemptydirs="false" todir="${dist}/war/build/WEB-INF/lib">
+			<fileset dir="${webcontent}/WEB-INF/lib" includes="*.jar">
+				<exclude name="**/servlet-api-2.5-6.1.9.jar" />
+				<!--<exclude name="**/ant.jar" />-->
+			</fileset>
+		</copy>
+
+
+
+		<copy todir="${dist}/war/build">
+			<fileset dir="${webcontent}">
+				<include name="*.jsp" />
+				<include name="*.html" />
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${dist}/war/build/WEB-INF/">
+			<fileset dir="${webcontent}/WEB-INF/">
+				<include name="*.xml" />
+			</fileset>
+		</copy>
+
+		<copy todir="${dist}/war/build/img">
+			<fileset dir="${webcontent}/img">
+				<include name="*.*" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${dist}/war/build/XSL">
+					<fileset dir="${webcontent}/XSL">
+						<include name="*.*" />
+					</fileset>
+				</copy>
+		
+		
+
+		<copy todir="${dist}/war/build/js/src">
+					<fileset dir="${webcontent}/js/src">
+						<include name="*.*" />
+					</fileset>
+		</copy>
+		
+		<copy todir="${dist}/war/build/js/vendor">
+							<fileset dir="${webcontent}/js/vendor">
+								<include name="*.*" />
+							</fileset>
+				</copy>
+		
+		<copy todir="${dist}/war/build/js">
+			<fileset dir="${webcontent}/js">
+				<include name="*.*" />
+			</fileset>
+		</copy>
+
+		<copy todir="${dist}/war/build/css">
+			<fileset dir="${webcontent}/css">
+				<include name="*.*" />
+			</fileset>
+		</copy>
+		<copy todir="${dist}/war/build/stylesheets">
+			<fileset dir="${webcontent}/stylesheets">
+				<include name="*.*" />
+			</fileset>
+		</copy>
+		
+				
+		
+		<mkdir dir="${dist}/war/build/test-output"/>
+		
+		<war file="${dist}/war/NPC_Regression.war" needxmlfile="false">
+			<fileset dir="${dist}/war/build">
+			</fileset>
+		</war>
+
+		<copy todir="/Users/plokeshwar/Documents/apache-tomcat-8.0.24/webapps">
+			<fileset dir="${dist}/war">
+				<include name="NPC_Regression.war" />
+			</fileset>
+		</copy>
+
+		<jar jarfile="${dist}/war/${projectName}.war" basedir="${dist}/war/build/" />
+
+	</target>
+
+	<target name="clean" description="clean up">
+
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}" />
+		<delete dir="${dist}" />
+	</target>
+</project>

@@ -1,0 +1,30 @@
+<project name="test" basedir=".">
+	<property name="jars" value="${basedir}/WEB-INF/lib" />
+	<property name="report-jars" value="${basedir}/WEB-INF/lib" />
+	<property name="BIN" value="${basedir}/bin" />
+	
+	<path id="master-classpath">
+		<pathelement location="${BIN}" />
+		<fileset dir="${jars}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${report-jars}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="testng-xslt-report">
+		<delete dir="${basedir}/test-output/testng-xslt">
+		</delete>
+		<mkdir dir="${basedir}/test-output/testng-xslt">
+		</mkdir>
+		<xslt in="${basedir}/test-output/xslReporting/testng-results.xml" style="${basedir}/XSL/testng-results.xsl" 
+			out="${basedir}/test-output/xslReporting/testng-xslt/index.html" processor="SaxonLiaison">
+			<param name="testNgXslt.outputDir" expression="${basedir}/test-output/xslReporting/testng-xslt/"/>
+			<param expression="true" name="testNgXslt.sortTestCaseLinks" />
+			<param expression="FAIL,SKIP,PASS,CONF,BY_CLASS" name="testNgXslt.testDetailsFilter" />
+			<param expression="true" name="testNgXslt.showRuntimeTotals" />
+			<classpath refid="master-classpath" />
+		</xslt>
+	</target>
+</project>

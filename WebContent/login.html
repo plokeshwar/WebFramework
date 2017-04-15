@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+<title>NPC Regression Suite</title>
+
+<link href="css/stylesheet.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".main_Head").toggle("slide");
+		$(".loginTable").delay(600).slideDown(1000);
+	});
+</script>
+
+</head>
+<body>
+
+	<div class="main_Head">
+		<div class="logo_head"></div>
+		<div class="header">
+			<div class="headCont">
+				<font>NPC REGRESSION SUITE</font>
+			</div>
+		</div>
+	</div>
+	<div class="loginTable">
+		<div class="login_head">
+			<span>NPC Regression Login</span><br />
+		</div>
+		<div class="wrapper">
+			<form id="contact-form" action="login" method="get">
+				<div class="wrap_child">
+					<span>User ID :</span>
+					<div class="iconTxtBox">
+						<input placeholder="Please enter your username" type="text"
+							name="userName" tabindex="1" required autofocus>
+						<div class="icon"></div>
+					</div>
+				</div>
+				<div class="wrap_child">
+					<span>Password :</span>
+					<div class="iconTxtBox">
+						<input placeholder="Please enter your password" type="password"
+							name="password" tabindex="1" required autofocus>
+						<div class="iconLck"></div>
+					</div>
+				</div>
+				<div class="wrap_child" style="padding-bottom: 0px;">
+					<!-- <input type="submit" name="Login" value="Login" id="contact-submit"  data-text="Login"/> -->
+					<button name="Login" type="submit" id="contact-submit"
+						data-text="Login">Login</button>
+				</div>
+			</form>
+		</div>
+
+	</div>
+
+
+</body>
+</html>
